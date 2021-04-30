@@ -43,7 +43,7 @@ const Login = (props) => {
       toast(`Welcome ${res.data.username}!`);
       setUser({ username: "", password: "" });
     } catch (error) {
-      console.log("RD: error in the POST request, Login.js", error.response);
+      console.log("RD: error in the POST request, Login.js: ", error.response);
     }
   };
 

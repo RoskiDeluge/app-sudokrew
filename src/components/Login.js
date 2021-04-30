@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,23 +24,42 @@ const Login = (props) => {
   // }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  const { email, password } = user;
+  const { username, password } = user;
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    if (username === "" || password === "") {
       toast("Please fill in all fields");
     } else {
-      // login({
-      //   email,
-      //   password,
-      // });
+      login({
+        username,
+        password,
+      });
+    }
+  };
+
+  const login = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const res = await axios.post(
+        "https://challenge.sudokrew.com/auth",
+        formData,
+        config
+      );
+      console.log(res.data);
+    } catch (error) {
+      // console.log("error in the POST request", error.response);
     }
   };
 
@@ -50,14 +70,13 @@ const Login = (props) => {
       </h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email Address</label>
+          <label htmlFor="username">User Name</label>
           <input
-            id="email"
-            type="email"
-            name="email"
-            value={email}
+            id="username"
+            type="text"
+            name="username"
+            value={username}
             onChange={onChange}
-            required
           />
         </div>
         <div className="form-group">
@@ -68,7 +87,6 @@ const Login = (props) => {
             name="password"
             value={password}
             onChange={onChange}
-            required
           />
         </div>
         <input

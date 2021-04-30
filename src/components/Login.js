@@ -5,24 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = (props) => {
-  // const alertContext = useContext(AlertContext);
-  // const authContext = useContext(AuthContext);
-
-  // const { setAlert } = alertContext;
-  // const { login, error, clearErrors, isAuthenticated } = authContext;
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     props.history.push('/');
-  //   }
-
-  //   if (error === 'Invalid Credentials') {
-  //     setAlert(error, 'danger');
-  //     clearErrors();
-  //   }
-  //   // eslint-disable-next-line
-  // }, [error, isAuthenticated, props.history]);
-
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -57,17 +39,17 @@ const Login = (props) => {
         formData,
         config
       );
-      console.log(res.data);
+      console.log(`Your token is: ${res.data.authToken}`);
+      toast(`Welcome ${res.data.username}!`);
+      setUser({ username: "", password: "" });
     } catch (error) {
-      // console.log("error in the POST request", error.response);
+      console.log("RD: error in the POST request, Login.js", error.response);
     }
   };
 
   return (
     <div className="form-container">
-      <h1>
-        Account <span className="text-primary">Login</span>
-      </h1>
+      <h2>Account Login</h2>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="username">User Name</label>

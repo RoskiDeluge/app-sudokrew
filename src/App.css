@@ -306,7 +306,7 @@ input {
 }
 
 input[type="text"],
-input[type="email"],
+input[type="username"],
 input[type="password"],
 input[type="date"],
 select,
@@ -399,6 +399,11 @@ table th {
 .item-exit-active {
   opacity: 0;
   transition: opacity 1000ms ease-in;
+}
+
+.Toastify__toast {
+  background-color: yellow !important;
+  color: black !important;
 }
 
 /* Mobile Styles */

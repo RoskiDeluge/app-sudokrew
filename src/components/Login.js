@@ -71,12 +71,9 @@ const Login = (props) => {
       );
       // console.log(res.data);
       setUsernames(res.data);
-      // console.log(`Your token is: ${res.data.authToken}`);
-      // toast(`Welcome ${res.data.username}!`);
-      // setUser({ username: "", password: "" });
     } catch (error) {
       console.log(
-        "RD: error in the POST request, getTransactions.js: ",
+        "RD: error in the GET request, getTransactions.js: ",
         error.response
       );
     }

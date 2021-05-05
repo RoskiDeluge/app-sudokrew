@@ -115,7 +115,7 @@ const Login = (props) => {
       <ToastContainer />
       <div>
         {usernames.map((user) => (
-          <div>{user.first_name}</div>
+          <div key={user.id}>{user.first_name}</div>
         ))}
       </div>
     </div>

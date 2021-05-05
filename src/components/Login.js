@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = (props) => {
+  const [usernames, setUsernames] = useState([]);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    getTransactions();
+  }, [token]);
 
   const { username, password } = user;
 
@@ -40,10 +46,39 @@ const Login = (props) => {
         config
       );
       console.log(`Your token is: ${res.data.authToken}`);
+      setToken(res.data.authToken);
+      // getTransactions();
       toast(`Welcome ${res.data.username}!`);
       setUser({ username: "", password: "" });
     } catch (error) {
       console.log("RD: error in the POST request, Login.js: ", error.response);
+    }
+  };
+
+  const getTransactions = async () => {
+    // console.log("this is within getTransactions");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const res = await axios.get(
+        "https://challenge.sudokrew.com/transactions",
+        config
+      );
+      // console.log(res.data);
+      setUsernames(res.data);
+      // console.log(`Your token is: ${res.data.authToken}`);
+      // toast(`Welcome ${res.data.username}!`);
+      // setUser({ username: "", password: "" });
+    } catch (error) {
+      console.log(
+        "RD: error in the POST request, getTransactions.js: ",
+        error.response
+      );
     }
   };
 
@@ -81,6 +116,11 @@ const Login = (props) => {
         <button className="btn">Home</button>{" "}
       </Link>
       <ToastContainer />
+      <div>
+        {usernames.map((user) => (
+          <div>{user.first_name}</div>
+        ))}
+      </div>
     </div>
   );
 };
